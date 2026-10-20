@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Clientes registrados | CodeLima{% endblock %}
+{% block content %}
+<section class="px-[5vw] py-10">
+  <h1 class="mb-6 text-3xl font-extrabold">Clientes registrados ({{ clientes|length }})</h1>
+  {% if clientes %}
+  <div class="overflow-x-auto rounded-xl bg-emerald-900/60">
+    <table class="w-full min-w-[640px] text-left text-sm">
+      <thead class="text-amber-400"><tr>
+        <th class="p-3">Nombre</th><th class="p-3">Correo</th><th class="p-3">Teléfono</th>
+        <th class="p-3">Curso</th><th class="p-3">Fecha</th><th class="p-3">Acciones</th></tr></thead>
+      <tbody>
+      {% for c in clientes %}
+        <tr class="border-t border-emerald-800">
+          <td class="p-3">{{ c.nombre }}</td><td class="p-3">{{ c.email }}</td>
+          <td class="p-3">{{ c.telefono or '—' }}</td><td class="p-3">{{ c.interes.nombre }}</td>
+          <td class="p-3">{{ c.creado_en.strftime('%d/%m/%Y') }}</td>
+          <td class="flex gap-3 p-3">
+            <a class="text-amber-400 underline" href="{{ url_for('clientes.editar', cid=c.id) }}">Editar</a>
+            <form method="post" action="{{ url_for('clientes.eliminar', cid=c.id) }}" data-confirm="¿Eliminar a {{ c.nombre }}?">
+              <button class="text-red-300 underline">Eliminar</button></form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="text-emerald-100/70">Aún no hay clientes. <a class="text-amber-400 underline" href="{{ url_for('clientes.inicio') }}">Registra el primero</a>.</p>
+  {% endif %}
+</section>
+{% endblock %}

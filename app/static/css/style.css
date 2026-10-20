@@ -1,0 +1,7 @@
+/* Estilos complementarios a Tailwind (CDN) */
+#typed::after { content: "|"; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+:focus-visible { outline: 3px solid #fbbf24; outline-offset: 2px; }
+#msg.ok { color: #8be3b0; }
+#msg.err { color: #ff8a7a; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

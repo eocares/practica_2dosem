@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CodeLima | Aprende a programar en 8 semanas{% endblock %}</title>
+  <meta name="description" content="Cursos prácticos de Python, web, MySQL y AWS. Reserva tu cupo gratis.">
+  <link rel="canonical" href="{{ request.base_url }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-emerald-950 text-stone-100 font-sans leading-relaxed">
+  <header class="flex items-center justify-between px-[5vw] py-4">
+    <a href="{{ url_for('clientes.inicio') }}" class="text-2xl font-extrabold tracking-tight">CodeLima</a>
+    <nav class="flex gap-3 text-sm">
+      <a class="px-3 py-2 hover:text-amber-400" href="{{ url_for('clientes.listado') }}">Clientes</a>
+      <a class="rounded-lg bg-amber-400 px-4 py-2 font-semibold text-stone-900 hover:-translate-y-0.5 transition"
+         href="{{ url_for('clientes.inicio') }}#registro">Reserva tu cupo</a>
+    </nav>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="p-8 text-center text-emerald-200/60">© 2026 CodeLima · Lima, Perú</footer>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

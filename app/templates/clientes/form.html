@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not cliente %}
+<section class="max-w-4xl px-[5vw] pb-16 pt-[8vh]">
+  <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+    <span id="typed" class="text-amber-400" data-words="Python,la web,MySQL,la nube"></span><br>sin tanto rollo.
+  </h1>
+  <p class="my-6 max-w-xl text-lg text-emerald-100/70">Clases en vivo, proyectos reales y un mentor que revisa tu código cada semana.</p>
+  <a href="#registro" class="inline-block rounded-lg bg-amber-400 px-6 py-3 font-semibold text-stone-900">Quiero mi cupo gratis</a>
+</section>
+<section class="grid grid-cols-1 gap-4 border-y border-emerald-900 px-[5vw] py-8 sm:grid-cols-3">
+  <div><strong class="block text-4xl font-extrabold text-amber-400" data-count="1200">0</strong>alumnos formados</div>
+  <div><strong class="block text-4xl font-extrabold text-amber-400" data-count="8">0</strong>semanas por curso</div>
+  <div><strong class="block text-4xl font-extrabold text-amber-400" data-count="94">0</strong>% termina su proyecto</div>
+</section>
+{% endif %}
+
+<section id="registro" class="grid gap-10 px-[5vw] py-14 md:grid-cols-2">
+  <div>
+    <h2 class="text-3xl md:text-5xl font-extrabold">{{ 'Editar cliente' if cliente else 'Reserva tu cupo' }}</h2>
+    <p class="mt-4 max-w-md text-emerald-100/70">
+      {{ 'Actualiza los datos y guarda los cambios.' if cliente else 'Déjanos tus datos y te enviamos fechas, precio y una clase de prueba.' }}
+    </p>
+  </div>
+  <form id="form-lead" action="{{ action }}" data-redirect="{{ redirect_to }}" novalidate
+        class="grid gap-4 rounded-xl bg-emerald-900/60 p-6">
+    {% set f = "w-full rounded-lg border border-emerald-700 bg-emerald-950 p-3" %}
+    <label class="grid gap-1 text-sm">Nombre completo
+      <input name="nombre" required minlength="3" value="{{ cliente.nombre if cliente }}" class="{{ f }}"></label>
+    <label class="grid gap-1 text-sm">Correo
+      <input name="email" type="email" required value="{{ cliente.email if cliente }}" class="{{ f }}"></label>
+    <label class="grid gap-1 text-sm">Teléfono (opcional)
+      <input name="telefono" inputmode="numeric" value="{{ cliente.telefono or '' if cliente }}" class="{{ f }}"></label>
+    <label class="grid gap-1 text-sm">Curso de interés
+      <select name="interes_id" required class="{{ f }}">
+        <option value="">Elige uno</option>
+        {% for i in intereses %}
+        <option value="{{ i.id }}" {{ 'selected' if cliente and cliente.interes_id == i.id }}>{{ i.nombre }}</option>
+        {% endfor %}
+      </select></label>
+    <label class="grid gap-1 text-sm">Mensaje (opcional)
+      <textarea name="mensaje" rows="3" maxlength="500" class="{{ f }}">{{ cliente.mensaje or '' if cliente }}</textarea></label>
+    <button type="submit" class="rounded-lg bg-amber-400 px-6 py-3 font-semibold text-stone-900 hover:-translate-y-0.5 transition">
+      {{ 'Guardar cambios' if cliente else 'Reservar mi cupo' }}</button>
+    <p id="msg" role="status" aria-live="polite" class="min-h-6 text-sm"></p>
+  </form>
+</section>
+{% endblock %}
